@@ -1,0 +1,2 @@
+FLASK_DEBUG=(True/False)
+FLASK_APP=main.py

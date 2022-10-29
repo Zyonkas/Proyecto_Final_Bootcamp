@@ -1,0 +1,3 @@
+ORIGIN_DATA="directorio de la base de datos"
+APIKEY="pon tu apikey "
+CRYPTOS = ["BTC", "ETH", "USDT", "BNB", "XRP", "ADA", "SOL", "DOT", "MATIC"]

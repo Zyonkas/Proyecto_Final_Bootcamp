@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/pico.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/spa.js"></script>
+    
+    <title>Conversor Crypto</title>
+    
+
+
+</head>
+<body class = "container" >
+    <header id="header_crypto" >
+        <h1>myCRYPTO</h1>               
+    </header>
+    <section>
+        <article id="movements">
+            
+            <table id="movements_table" class="inactive">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>From</th>
+                    <th>Cantidad</th>
+                    <th>To</th>
+                    <th>Cantidad</th>
+                </tr>
+            </table>
+            <span id="mensaje">No se han encontrado movimientos</span>
+        </article>
+
+        <article id="saldo">
+            <table>
+                <tr>
+                    <th>Invertido:</th>
+                    <td id="invesment"></td>
+                </tr>
+               
+                <tr>
+                    <th>Recuperado:</th>
+                    <td id="recovered"></td>
+                </tr>
+
+                <tr>
+                    <th>V. de compra:</th>
+                    <td id="buy_value"></td>
+                </tr>
+
+                <tr>
+                    <th>V. actual:</th>
+                    <td id="current_value"></td>
+                </tr>
+                
+                <tr>
+                    <th class="total">Resultado:</th>
+                    <td id="profit" class="total"></td>
+                </tr>
+
+            </table>
+
+
+            
+        </article>
+
+        <article id="business" class="inactive">
+            
+
+            <form action="movements_new" id="business_new">
+                <div class="form_crypto">
+                    From:
+                    <select name="selec_from" id="selec_from">                  
+                    </select>
+                    Q:
+                    <input type="number" name="quantity_from" id="quantity_from"  placeholder="Importe a calcular">  
+
+
+                    
+                
+                    
+
+                    <span id="text_error" class="inactive"> error</span>
+                    <span id="text_date" class="inactive"></span>&nbsp;&nbsp;
+                    <span id="text_time" class="inactive"></span>
+                    <br>
+                    <p id="time">
+                        <span id="minutes"></span>  
+                        <span id="seconds"></span> 
+                    </p>
+                    
+                        
+                     
+
+                </div>
+
+                <div class="to_cripto">
+                    To:
+                    <select name="selec_to" id="selec_to">                  
+                    </select>
+
+                    <table>
+                        <tr>
+                            <th>Q:</th>
+                            <td id="cripto_total" class="total"></td>
+                        </tr>
+                       
+                        <tr>
+                            <th>P.V:</th>
+                            <td id="cripto_coin" class="total"></td>
+                        </tr>
+                    </table>
+                    <div class="center">
+                        <button id="btn_aceptar">BUY</button>  
+                    </div>
+                    
+                    
+                      
+                    
+                    
+                </div>
+                
+            </form>
+            
+        </article>
+
+    </section>
+
+
+    <footer>
+        <div  class="container">
+            &copy; 2022 - JK
+        </div>
+    </footer>
+    
+</body>
+</html>
