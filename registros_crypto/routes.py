@@ -3,8 +3,8 @@ import sqlite3
 from flask import render_template, request
 from main import app
 from registros_crypto.models import list_all_movements, insert, check_balance_for_currency, list_all_coins, calculate_result_of_investments
-from form import MovimientosForm, validation_error_form
-from coinapi import ModelError, CoinApiStatus
+from registros_crypto.form import MovimientosForm, validation_error_form
+from registros_crypto.coinapi import ModelError, CoinApiStatus
 
 
 @app.route("/")

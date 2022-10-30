@@ -1,38 +1,36 @@
 import sqlite3
-from unittest import result
 from config import ORIGIN_DATA, CRYPTOS
 
 
-LIST_ALL_MOVEMENTS = "SELECT id, date, time, moneda_from, cantidad_from, moneda_to, cantidad_to FROM movimientos ORDER BY date, time;"
-LIST_ALL_COINS = "SELECT moneda_from, cantidad_from, moneda_to, cantidad_to FROM movimientos;"
-GET_QUANTITY_FOR_COIN = "SELECT cantidad_from, cantidad_to FROM movimientos WHERE moneda_from = ?"
-INSERT_MOVEMENT = "INSERT INTO movimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) values (?, ?, ?, ?, ?, ?);" 
+LIST_ALL_MOVEMENTS = "SELECT id, date, time, moneda_from, cantidad_from, moneda_to, cantidad_to FROM movements ORDER BY date, time;"
+LIST_ALL_COINS = "SELECT moneda_from, cantidad_from, moneda_to, cantidad_to FROM movements;"
+GET_QUANTITY_FOR_COIN = "SELECT cantidad_from, cantidad_to FROM movements WHERE moneda_from = ?"
+INSERT_MOVEMENT = "INSERT INTO movements (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) values (?, ?, ?, ?, ?, ?);" 
 
-def filas_to_diccionario(filas, columnas):
-    resultado = []
-    for fila in filas:
-        posicion_columna = 0
-        d = {}
-        for campo in columnas:
-            d[campo[0]] = fila[posicion_columna]
-            posicion_columna += 1
-        resultado.append(d)
-
-    return resultado
 
 def list_all_movements():
     conn = sqlite3.connect(ORIGIN_DATA)
     cur = conn.cursor()
 
-    cur.execute(LIST_ALL_MOVEMENTS)
-    resultado = filas_to_diccionario(cur.fetchall(), cur.description)
+    list = cur.execute(LIST_ALL_MOVEMENTS)
+    columns = cur.description
+    resultado = []
 
-    conn.close()
-    for movimiento in resultado:       
-        if movimiento["moneda_from"] == "EUR":
-           movimiento["cantidad_from"] = round(movimiento["cantidad_from"] ,2) 
-        else:
-            movimiento["cantidad_from"] = round(movimiento["cantidad_from"] ,8)  
+    for movement in list:
+        id, date, time, moneda_from, cantidad_from, moneda_to, cantidad_to = [movement[i] for i in range(len(columns))]
+
+        cantidad_from = round(cantidad_from, 2 if moneda_from == "EUR" else 8)
+        cantidad_to = round(cantidad_to, 2 if moneda_to == "EUR" else 8)
+
+        resultado.append({
+            "id": id,
+            "date": date,
+            "time": time,
+            "moneda_from": moneda_from,
+            "cantidad_from": cantidad_from,
+            "moneda_to": moneda_to,
+            "cantidad_to": cantidad_to
+        })
 
     return resultado
 

@@ -4,7 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/pico.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/function.js"></script>
     <script src="/static/js/spa.js"></script>
     
     <title>Conversor Crypto</title>
@@ -16,7 +17,11 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
+    <div id="message_error" class="inactive">
+        "Error en la alta de movimientos"
+    </div>
     <section>
+
         <article id="movements">
             
             <table id="movements_table" class="inactive">
@@ -36,7 +41,7 @@
             <table>
                 <tr>
                     <th>Invertido:</th>
-                    <td id="invesment"></td>
+                    <td id="invested"></td>
                 </tr>
                
                 <tr>
@@ -55,7 +60,7 @@
                 </tr>
                 
                 <tr>
-                    <th class="total">Resultado:</th>
+                    <th class="total">Beneficios:</th>
                     <td id="profit" class="total"></td>
                 </tr>
 
@@ -65,10 +70,10 @@
             
         </article>
 
-        <article id="business" class="inactive">
-            
-
-            <form action="movements_new" id="business_new">
+        
+    </section>      
+    <aside id="form_alta" class="inactive">
+            <form action="alta" id="form_new">
                 <div class="form_crypto">
                     From:
                     <select name="selec_from" id="selec_from">                  
@@ -95,7 +100,7 @@
 
                 </div>
 
-                <div class="to_cripto">
+                <div class="crypto_to">
                     To:
                     <select name="selec_to" id="selec_to">                  
                     </select>
@@ -103,12 +108,12 @@
                     <table>
                         <tr>
                             <th>Q:</th>
-                            <td id="cripto_total" class="total"></td>
+                            <td id="total_crypto" class="total"></td>
                         </tr>
                        
                         <tr>
                             <th>P.V:</th>
-                            <td id="cripto_coin" class="total"></td>
+                            <td id="crypto" class="total"></td>
                         </tr>
                     </table>
                     <div class="center">
@@ -122,10 +127,8 @@
                 </div>
                 
             </form>
-            
-        </article>
-
-    </section>
+    </aside>    
+    
 
 
     <footer>
