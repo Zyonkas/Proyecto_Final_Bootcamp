@@ -118,7 +118,9 @@ def insert(registro):
     cur = conn.cursor()
 
     cur.execute(INSERT_MOVEMENT, registro)
+    conn.commit()
     conn.close()
+
 
 def create_empty_coin_dict(coins):
     return dict((x, 0.0) for x in coins)

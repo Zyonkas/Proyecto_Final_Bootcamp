@@ -1,9 +1,9 @@
+from ctypes.wintypes import HLOCAL
 from email.policy import HTTP
 import sqlite3
 from flask import render_template, request
 from main import app
 from registros_crypto.models import list_all_movements, insert, check_balance_for_currency, list_all_coins, calculate_result_of_investments
-from registros_crypto.form import MovimientosForm, validation_error_form
 from registros_crypto.coinapi import ModelError, CoinApiStatus
 
 
@@ -28,12 +28,6 @@ def alta():
     
     alta = request.json
 
-    form = MovimientosForm(data=alta)
-    form.validate()
-    error_msg = validation_error_form(form)
-    if error_msg != "":
-        return return_json_fail(error_msg, 400, error_msg)
-
     moneda_from = alta["moneda_from"]
     if alta["moneda_from"] != "EUR":
 
@@ -43,8 +37,9 @@ def alta():
         except:
             error_msg = "Cantidad incorrecta, solo valores numericos"
             return return_json_fail(error_msg, 400, error_msg)
-
+    
     if alta["moneda_from"] == "EUR" or sufficient_quantity >= quantity_change:
+    
         try:
             insert(
                 [
@@ -69,15 +64,7 @@ def alta():
     else:
         error_msg = "Saldo insuficiente"
         return return_json_fail(error_msg, 400, error_msg)
-        
-        
-
-def return_json_fail(comment, http_error, message):
-    return {
-               "status": "fail",
-               "data": comment,
-               "mensaje": message
-           }, http_error       
+             
 
 @app.route("/api/v1/status", methods=["GET"])
 def status_movements():

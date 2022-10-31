@@ -21,8 +21,8 @@ class CoinApiStatus:
             coinapi_rates = [rate for rate in resultado["rates"] if rate["asset_id_quote"] in CRYPTOS]
             for currency_rate in coinapi_rates:
                 self.exchange_to_eur[currency_rate["asset_id_quote"]] = 1 / currency_rate["rate"]
-            else:
-                raise ModelError(f"{r.status_code}: {resultado['error']}")     
+        else:
+            raise ModelError(f"{r.status_code}: {resultado['error']}")     
     
 
     def get_exchange_rate(self, coin_from, coin_to):

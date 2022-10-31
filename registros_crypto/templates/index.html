@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="/static/js/function.js"></script>
-    <script src="/static/js/spa.js"></script>
+    <script src="/static/js/app.js"></script>
     
     <title>Conversor Crypto</title>
     
@@ -17,14 +16,14 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
-    <div id="message_error" class="inactive">
+    <div id="message_error">
         "Error en la alta de movimientos"
     </div>
-    <section>
+    
 
-        <article id="movements">
+    <div id="movements_list" class="container_movements">
             
-            <table id="movements_table" class="inactive">
+            <table id="movements_table">
                 <tr>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -34,11 +33,11 @@
                     <th>Cantidad</th>
                 </tr>
             </table>
-            <span id="mensaje">No se han encontrado movimientos</span>
-        </article>
+            <span id="message">No se han encontrado movimientos</span>
+    </div>
 
-        <article id="saldo">
-            <table>
+    <div id="status_balance">
+            <table id="status">
                 <tr>
                     <th>Invertido:</th>
                     <td id="invested"></td>
@@ -68,41 +67,66 @@
 
 
             
-        </article>
+    </div>
 
         
-    </section>      
-    <aside id="form_alta" class="inactive">
-            <form action="alta" id="form_new">
-                <div class="form_crypto">
+        
+    <aside class="show_onclick">
+            <form action="/api/v1/alta">
+               
+                <div class="container" id="form_crypto">
+                    <label for="monedas"></label>
                     From:
-                    <select name="selec_from" id="selec_from">                  
+                    
+                    <select name="monedas_from" id="cryptos" required>
+                        <optgroup name="monedas_from">
+                            <option value="BTC">BTC</option>                  
+                            <option value="ETH">ETH</option>                  
+                            <option value="BNB">BNB</option>                  
+                            <option value="XRP">XRP</option>                  
+                            <option value="USDT">USDT</option>                  
+                            <option value="ADA">ADA</option>                  
+                            <option value="SOL">SOL</option>                  
+                            <option value="DOT">DOT</option>                  
+                            <option value="MATIC">MATIC</option>
+                        </optgroup>
+                        <optgroup name="monedas_from" id="Fiat" >      
+                            <option value="EUR">EUR</option>                  
+                        </optgroup> 
                     </select>
                     Q:
-                    <input type="number" name="quantity_from" id="quantity_from"  placeholder="Importe a calcular">  
+                    <input type="number" name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
 
-
+                    <a title="calculator" id="calculator">
+                        <img src="/static/img/presupuesto.png" alt="calculator" />
+                    </a>    
                     
-                
-                    
-
-                    <span id="text_error" class="inactive"> error</span>
-                    <span id="text_date" class="inactive"></span>&nbsp;&nbsp;
-                    <span id="text_time" class="inactive"></span>
-                    <br>
-                    <p id="time">
-                        <span id="minutes"></span>  
-                        <span id="seconds"></span> 
-                    </p>
                     
                         
                      
 
                 </div>
 
-                <div class="crypto_to">
+                <div id="crypto_to" class="container">
+                    <label for="monedas"></label>
                     To:
-                    <select name="selec_to" id="selec_to">                  
+                    
+                    
+                    <select name="monedas_to" id="cryptos" required>
+                        <optgroup name="cryptos">
+                            <option value="BTC">BTC</option>                  
+                            <option value="ETH">ETH</option>                  
+                            <option value="BNB">BNB</option>                  
+                            <option value="XRP">XRP</option>                  
+                            <option value="USDT">USDT</option>                  
+                            <option value="ADA">ADA</option>                  
+                            <option value="SOL">SOL</option>                  
+                            <option value="DOT">DOT</option>                  
+                            <option value="MATIC">MATIC</option>
+                        </optgroup>
+                        <optgroup name="Fiat" >      
+                            <option value="EUR">EUR</option>                  
+                        </optgroup> 
                     </select>
 
                     <table>
@@ -116,8 +140,8 @@
                             <td id="crypto" class="total"></td>
                         </tr>
                     </table>
-                    <div class="center">
-                        <button id="btn_aceptar">BUY</button>  
+                    <div class="btn_buy">
+                        <button id="btn_buy">BUY</button>  
                     </div>
                     
                     
