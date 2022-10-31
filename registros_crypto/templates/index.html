@@ -16,9 +16,6 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
-    <div id="message_error">
-        "Error en la alta de movimientos"
-    </div>
     
 
     <div id="movements_list" class="container_movements">
@@ -72,9 +69,9 @@
         
         
     <aside class="show_onclick">
-            <form action="/api/v1/alta">
+            <form id="myform">
                
-                <div class="container" id="form_crypto">
+                <div class="container">
                     <label for="monedas"></label>
                     From:
                     
@@ -95,10 +92,10 @@
                         </optgroup> 
                     </select>
                     Q:
-                    <input type="number" name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
+                    <input id="cantidad_from" type="number" name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
 
                     <a title="calculator" id="calculator">
-                        <img src="/static/img/presupuesto.png" alt="calculator" />
+                        <img src="/static/img/presupuesto.png" alt="calculator" id="calculator" />
                     </a>    
                     
                     
@@ -112,7 +109,7 @@
                     To:
                     
                     
-                    <select name="monedas_to" id="cryptos" required>
+                    <select name="monedas_to" id="cryptos2" required>
                         <optgroup name="cryptos">
                             <option value="BTC">BTC</option>                  
                             <option value="ETH">ETH</option>                  
@@ -137,11 +134,11 @@
                        
                         <tr>
                             <th>P.V:</th>
-                            <td id="crypto" class="total"></td>
+                            <td id="pvcrypto" class="total"></td>
                         </tr>
                     </table>
                     <div class="btn_buy">
-                        <button id="btn_buy">BUY</button>  
+                        <button type="submit" id="btn_buy">BUY</button>  
                     </div>
                     
                     

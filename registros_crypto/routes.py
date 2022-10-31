@@ -1,4 +1,3 @@
-from ctypes.wintypes import HLOCAL
 from email.policy import HTTP
 import sqlite3
 from flask import render_template, request
@@ -111,11 +110,14 @@ def select(coin_from, coin_to, q_from):
         error_msg = "Datos Incorrectos"
         return return_json_fail(error_msg, 400, error_msg)
 
+
     sufficient_quantity = 0
     if coin_from != "EUR":
         sufficient_quantity = check_balance_for_currency(coin_from)
-
+        
     if coin_from == "EUR" or sufficient_quantity >= quantity_change:
+
+        
         try:
             c = CoinApiStatus()
             rate, date, time = c.get_exchange_rate(coin_from, coin_to)
@@ -129,14 +131,14 @@ def select(coin_from, coin_to, q_from):
                 },
                 "status": "success"
             }
-
+            
         except ModelError as e:
             return return_json_fail(str(e), 400, "No se ha podido establecer la conexión")
 
     else:
         error_msg = f"Cantidad insuficiente de {coin_from}, en tu cartera"
         return return_json_fail(error_msg, 400, error_msg)
-
+ 
 
 def return_json_fail(comment, http_error, message):
     return {

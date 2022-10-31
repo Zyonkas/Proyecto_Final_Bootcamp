@@ -9,11 +9,12 @@ function all_movements_handler() {
     }
     movements_request.send()
 }
-//Muestra todos los movimientos de la lista
+
 function all_movements() {
     if (this.readyState === 4) {
     
         if (this.status === 200) {
+            
             
 
             const data = JSON.parse(this.responseText)
@@ -102,44 +103,82 @@ function refresh(){
 }
 
 
-function alta_handler() {
+function alta_handler(ev){
+    ev.preventDefault();
+
+    let date = new Date().toJSON().slice(0, 10);
+    let time = new Date().toJSON().slice(11, 19)
+
+    const select = document.getElementById("cryptos");
+    const value_from = select.options[select.selectedIndex].value;
+
+    const cFrom = document.getElementById("cantidad_from").value;
+
+    const select2 = document.getElementById("cryptos2");
+    const value_to = select2.options[select2.selectedIndex].value;
+    const pv = document.getElementById("pvcrypto").value;
+
+
+    if(value_from === "EUR" && value_to === "EUR"){
+        pv = 1
+    }
+
+
     alta_request = new XMLHttpRequest()
     alta_request.open("POST", "/api/v1/alta", true)
+
+    alta_request.onreadystatechange = function(){
+        
+        if (alta_request.readyState === 4){
+            
+            if(alta_request.status === 201){
+                
+                all_movements_handler()
+                status_handler()
+
+            }
+        }
+    }
+
     alta_request.onerror = function() {
         show_connection_error("No se ha podido completar el alta")
     }
     alta_request.setRequestHeader("Content-type", "application/json")
-    alta_request.send()
+    alta_request.send(JSON.stringify({
+        "date": date,
+        "time": time,
+        "moneda_from": value_from,
+        "cantidad_from": cFrom,
+        "moneda_to": value_to,
+        "cantidad_to": pv * cFrom,
+
+
+    }))
+    return false;
 }
 
 function status_handler() {
 
     status_request = new XMLHttpRequest()
+
+    status_request.onreadystatechange = function(){
+    if (status_request.readyState === 4){
+        console.log(status_request.response);
+        const data = JSON.parse(status_request.response).data;
+        document.getElementById("invested").innerHTML = data.invertido;
+        document.getElementById("recovered").innerHTML = data.recuperado;
+        document.getElementById("buy_value").innerHTML = data.valor_compra;
+        document.getElementById("current_value").innerHTML = data.valor_actual;
+        document.getElementById("profit").innerHTML = data.beneficios;
+        }
+    }
     status_request.open("GET", "/api/v1/status", true)
-    // status_request.onload = view_status
     status_request.onerror = function() {
         show_connection_error("Error en la peticion del estado")
         alert("No se ha podido completar la peticion del estado")
     }
     status_request.send()
 }
-// function view_status() {
-    
-
-//     if (this.readyState == 4 && this.status == 200) {
-//         const wallet = JSON.parse(this.responseText)
-//         const wallet_status = wallet.value
-
-//         values_color(wallet_status.toFixed(2), "#invested")
-//         values_color(wallet_status.toFixed(2), "#recovered")
-//         values_color(wallet_status.toFixed(2), "#buy_value")
-//         values_color(wallet_status.toFixed(2), "#current_value")
-//         values_color(wallet_status.toFixed(2), "#profit")
-//     }
-//     else {
-//         show_connection_error("Error en la consulta de movimientos")
-//     }
-// }
 
 
 function selec_from() {
@@ -158,8 +197,27 @@ function selec_from() {
 
 
 function CalculatorExchange(){
+    const select = document.getElementById("cryptos");
+    const value_from = select.options[select.selectedIndex].value;
+    const cFrom = document.getElementById("cantidad_from").value;
+    const select2 = document.getElementById("cryptos2");
+    const value_to = select2.options[select2.selectedIndex].value;
+
     calculator_request = new XMLHttpRequest()
-    const url = '/api/v1/selec/+coin_from+/+coin_to+/+q_from+'
+    
+    calculator_request.onreadystatechange = function(){
+    if (calculator_request.readyState === 4 ) {
+        console.log(calculator_request.response);
+        const data = JSON.parse(calculator_request.response).data;
+        document.getElementById("pvcrypto").value = data.pv;
+        document.getElementById("pvcrypto").innerHTML = data.pv;
+        document.getElementById("total_crypto").value  = data.q;
+        document.getElementById("total_crypto").innerHTML  = data.q;
+
+    }
+    }
+
+    const url = '/api/v1/selec/'+value_from+'/'+value_to+'/'+cFrom
     calculator_request.open("GET", url, true)
     calculator_request.onerror = function(){
         show_connection_error("ERROR en la peticion de cambio")
@@ -175,9 +233,10 @@ window.onload = function () {
     all_movements_handler()
     status_handler()
  
-   document.getElementById("calculator").onclick = CalculatorExchange
-   document.getElementById("form_alta").onclick = alta_handler
-    
+   document.getElementById("calculator").addEventListener("click", CalculatorExchange)
+
+   document.getElementById("myform").addEventListener("submit", alta_handler)
+   
 }
 
 function show_connection_error(message){
@@ -186,16 +245,5 @@ function show_connection_error(message){
 }
 
 
-// Ver estado
 
 
-
-// function values_color(value,id){
-//     document.querySelector(id).innerHTML = value 
-//     if (value>= 0){
-//         document.querySelector(id).style.color = "green"          
-//     }    
-//     else{
-//         document.querySelector(id).style.color = "red"
-//     }
-//  }
