@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <script src="/static/js/app.js"></script>
     
     <title>Conversor Crypto</title>
@@ -16,7 +19,6 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
-    
 
     <div id="movements_list" class="container_movements">
             
@@ -30,7 +32,7 @@
                     <th>Cantidad</th>
                 </tr>
             </table>
-            <span id="message">No se han encontrado movimientos</span>
+           
     </div>
 
     <div id="status_balance">
@@ -76,6 +78,9 @@
                     From:
                     
                     <select name="monedas_from" id="cryptos" required>
+                        <optgroup name="monedas_from" id="Fiat" >      
+                            <option value="EUR">EUR</option>                  
+                        </optgroup> 
                         <optgroup name="monedas_from">
                             <option value="BTC">BTC</option>                  
                             <option value="ETH">ETH</option>                  
@@ -87,15 +92,14 @@
                             <option value="DOT">DOT</option>                  
                             <option value="MATIC">MATIC</option>
                         </optgroup>
-                        <optgroup name="monedas_from" id="Fiat" >      
-                            <option value="EUR">EUR</option>                  
-                        </optgroup> 
                     </select>
+                    
                     Q:
                     <input id="cantidad_from" type="number" name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
-
+                    
                     <a title="calculator" id="calculator">
                         <img src="/static/img/presupuesto.png" alt="calculator" id="calculator" />
+
                     </a>    
                     
                     
@@ -110,6 +114,9 @@
                     
                     
                     <select name="monedas_to" id="cryptos2" required>
+                        <optgroup name="Fiat" >      
+                            <option value="EUR">EUR</option>                  
+                        </optgroup> 
                         <optgroup name="cryptos">
                             <option value="BTC">BTC</option>                  
                             <option value="ETH">ETH</option>                  
@@ -121,21 +128,20 @@
                             <option value="DOT">DOT</option>                  
                             <option value="MATIC">MATIC</option>
                         </optgroup>
-                        <optgroup name="Fiat" >      
-                            <option value="EUR">EUR</option>                  
-                        </optgroup> 
                     </select>
+                    <span id="message_error" class="hidden"></span>
 
                     <table>
                         <tr>
                             <th>Q:</th>
                             <td id="total_crypto" class="total"></td>
                         </tr>
-                       
+                        
                         <tr>
                             <th>P.V:</th>
                             <td id="pvcrypto" class="total"></td>
                         </tr>
+                        
                     </table>
                     <div class="btn_buy">
                         <button type="submit" id="btn_buy">BUY</button>  

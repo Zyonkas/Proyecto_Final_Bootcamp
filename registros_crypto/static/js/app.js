@@ -4,6 +4,7 @@ function all_movements_handler() {
     movements_request.open("GET", "/api/v1/movimientos", true)
     movements_request.onload = all_movements
     movements_request.onerror = function() {
+   
         show_connection_error("Error en la consulta de movimientos")
 
     }
@@ -25,10 +26,7 @@ function all_movements() {
                 message.style.display = "block";
                 table.style.display = "none";
             }
-            else {
-                refresh()
-                table.style.display = "block";
-                message.style.display = "none";
+        
             
                 for (let i=0; i < movements.length; i++){
                     item = movements[i]
@@ -69,7 +67,7 @@ function all_movements() {
             }
             
         }
-    }
+    
 
 function refresh(){
     const table = document.querySelector("#movements_table")
@@ -119,9 +117,6 @@ function alta_handler(ev){
     const pv = document.getElementById("pvcrypto").value;
 
 
-    if(value_from === "EUR" && value_to === "EUR"){
-        pv = 1
-    }
 
 
     alta_request = new XMLHttpRequest()
@@ -137,10 +132,13 @@ function alta_handler(ev){
                 status_handler()
 
             }
+        }   if (alta_request.status >= 400){
+            alert("ERROR en la peticion de alta")
         }
     }
 
     alta_request.onerror = function() {
+        
         show_connection_error("No se ha podido completar el alta")
     }
     alta_request.setRequestHeader("Content-type", "application/json")
@@ -163,7 +161,7 @@ function status_handler() {
 
     status_request.onreadystatechange = function(){
     if (status_request.readyState === 4){
-        console.log(status_request.response);
+    
         const data = JSON.parse(status_request.response).data;
         document.getElementById("invested").innerHTML = data.invertido;
         document.getElementById("recovered").innerHTML = data.recuperado;
@@ -171,11 +169,15 @@ function status_handler() {
         document.getElementById("current_value").innerHTML = data.valor_actual;
         document.getElementById("profit").innerHTML = data.beneficios;
         }
+        if (status_request.status >= 400){
+            alert("ERROR en la peticion")
+        }
     }
     status_request.open("GET", "/api/v1/status", true)
     status_request.onerror = function() {
+       
         show_connection_error("Error en la peticion del estado")
-        alert("No se ha podido completar la peticion del estado")
+        
     }
     status_request.send()
 }
@@ -188,6 +190,7 @@ function selec_from() {
 
     selec_request.open("GET", url, true)
     selec_request.onerror = function() {
+       
         show_connection_error("ERROR en la consulta de datos")
     }
     selec_request.send()
@@ -207,43 +210,54 @@ function CalculatorExchange(){
     
     calculator_request.onreadystatechange = function(){
     if (calculator_request.readyState === 4 ) {
-        console.log(calculator_request.response);
+    
         const data = JSON.parse(calculator_request.response).data;
         document.getElementById("pvcrypto").value = data.pv;
         document.getElementById("pvcrypto").innerHTML = data.pv;
         document.getElementById("total_crypto").value  = data.q;
         document.getElementById("total_crypto").innerHTML  = data.q;
 
-    }
+    }if(calculator_request.status >= 400){
+        if(value_from == value_to){
+            alert("ERROR no puedes cambiar dos monedas iguales")
+        }else{
+            alert("ERROR en la peticion")
+        }
+    }   
     }
 
     const url = '/api/v1/selec/'+value_from+'/'+value_to+'/'+cFrom
     calculator_request.open("GET", url, true)
-    calculator_request.onerror = function(){
-        show_connection_error("ERROR en la peticion de cambio")
-
-    }
     calculator_request.send()
 }
-
-
 
 
 window.onload = function () {
     all_movements_handler()
     status_handler()
- 
+    
    document.getElementById("calculator").addEventListener("click", CalculatorExchange)
 
    document.getElementById("myform").addEventListener("submit", alta_handler)
    
-}
+//    document.getElementById("close-btn").addEventListener("onclick", hide_error)
 
-function show_connection_error(message){
-    document.querySelector("#message_error").classList.remove("inactive")
-    document.querySelector("#message_error").innerHTML = message
-}
 
+}
+// window.onerror = function(){
+//     show_connection_error()
+// }
+
+// function show_connection_error(message){
+//     document.getElementById("errormsg").innerHTML = message
+//     document.getElementById("alert").classList.remove("hide");
+//     document.getElementById("alert").classList.add("show");
+//     document.getElementById("alert").classList.add("showAlert");
+// }
+// function hide_error(){
+//     document.getElementById("close-btn").classList.add("hide");
+//     document.getElementById("close-btn").classList.remove("show");
+// }
 
 
 
