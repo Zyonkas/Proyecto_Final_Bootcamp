@@ -84,7 +84,7 @@ def calculate_result_of_investments(exchange_to_eur):
     cur = conn.cursor()
 
     list_coins = cur.execute(LIST_ALL_COINS)
-
+    
     sell_coins = create_empty_coin_dict(CRYPTOS)
     buy_coins = create_empty_coin_dict(CRYPTOS)
     
@@ -120,6 +120,7 @@ def calculate_result_of_investments(exchange_to_eur):
     }
 
     return total
+    
 
 
 def insert(registro):

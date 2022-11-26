@@ -3,11 +3,8 @@ function all_movements_handler() {
     movements_request = new XMLHttpRequest()
     movements_request.open("GET", "/api/v1/movimientos", true)
     movements_request.onload = all_movements
-    movements_request.onerror = function() {
-   
-        show_connection_error("Error en la consulta de movimientos")
 
-    }
+    
     movements_request.send()
 }
 
@@ -21,7 +18,7 @@ function all_movements() {
             const data = JSON.parse(this.responseText)
             const table = document.querySelector("#movements_table")
             const movements = data.data
-            const message = document.querySelector("#message")
+            const message = document.querySelector("#message_error")
             if (movements.length == 0){
                 message.style.display = "block";
                 table.style.display = "none";
@@ -61,12 +58,9 @@ function all_movements() {
                 
             }
             
-        } else {
-
-            show_connection_error("Se ha producido un error en la consulta de movimientos")
-            }
-            
-        }
+    
+}
+}
     
 
 function refresh(){
@@ -116,6 +110,9 @@ function alta_handler(ev){
     const value_to = select2.options[select2.selectedIndex].value;
     const pv = document.getElementById("pvcrypto").value;
 
+    if(validatorPV()){
+
+   
 
 
 
@@ -123,24 +120,26 @@ function alta_handler(ev){
     alta_request.open("POST", "/api/v1/alta", true)
 
     alta_request.onreadystatechange = function(){
-        
-        if (alta_request.readyState === 4){
+        ev.preventDefault();  
+            if (alta_request.readyState === 4){
             
-            if(alta_request.status === 201){
+                if(alta_request.status === 201){
                 
                 all_movements_handler()
                 status_handler()
+                 document.getElementById("pvcrypto").value = "";
+                document.getElementById("pvcrypto").innerHTML = "";
+                document.getElementById("total_crypto").value  = "";
+                document.getElementById("total_crypto").innerHTML  = "";
+                HideBuy();
+                document.getElementById("cryptos").disabled = false;
+                document.getElementById("cryptos2").disabled = false;
+                document.getElementById("cantidad_from").disabled = false;
 
-            }
-        }   if (alta_request.status >= 400){
-            alert("ERROR en la peticion de alta")
-        }
+                }
+            }   
     }
 
-    alta_request.onerror = function() {
-        
-        show_connection_error("No se ha podido completar el alta")
-    }
     alta_request.setRequestHeader("Content-type", "application/json")
     alta_request.send(JSON.stringify({
         "date": date,
@@ -152,6 +151,7 @@ function alta_handler(ev){
 
 
     }))
+    }
     return false;
 }
 
@@ -199,65 +199,115 @@ function selec_from() {
     
 
 
-function CalculatorExchange(){
+function CalculatorExchange(ev){
+    ev.preventDefault() 
     const select = document.getElementById("cryptos");
     const value_from = select.options[select.selectedIndex].value;
     const cFrom = document.getElementById("cantidad_from").value;
     const select2 = document.getElementById("cryptos2");
     const value_to = select2.options[select2.selectedIndex].value;
 
+    if (validatorCalculator()){
+
+    
+
     calculator_request = new XMLHttpRequest()
     
     calculator_request.onreadystatechange = function(){
-    if (calculator_request.readyState === 4 ) {
-    
-        const data = JSON.parse(calculator_request.response).data;
-        document.getElementById("pvcrypto").value = data.pv;
-        document.getElementById("pvcrypto").innerHTML = data.pv;
-        document.getElementById("total_crypto").value  = data.q;
-        document.getElementById("total_crypto").innerHTML  = data.q;
 
-    }if(calculator_request.status >= 400){
-        if(value_from == value_to){
-            alert("ERROR no puedes cambiar dos monedas iguales")
-        }else{
-            alert("ERROR en la peticion")
-        }
-    }   
+        if (calculator_request.readyState === 4 && calculator_request.status === 200 ) {
+            
+            const data = JSON.parse(calculator_request.response).data;
+            document.getElementById("pvcrypto").value = data.pv;
+            document.getElementById("pvcrypto").innerHTML = data.pv;
+            document.getElementById("total_crypto").value  = data.q;
+            document.getElementById("total_crypto").innerHTML  = data.q;
+            ShowBuy();
+            document.getElementById("cryptos").disabled = true;
+            document.getElementById("cryptos2").disabled = true;
+            document.getElementById("cantidad_from").disabled = true;
+            }
+            if(calculator_request.status !== 200 && calculator_request.readyState === 4){
+                const msg = JSON.parse(calculator_request.response).mensaje;
+                document.getElementById("pvcrypto").value = "";
+                document.getElementById("pvcrypto").innerHTML = "";
+                document.getElementById("total_crypto").value  = "";
+                document.getElementById("total_crypto").innerHTML  = "";
+                HideBuy();
+                alert("Error!" + msg)
+
+            }
+          
     }
+          
 
     const url = '/api/v1/selec/'+value_from+'/'+value_to+'/'+cFrom
     calculator_request.open("GET", url, true)
     calculator_request.send()
+    }
+}
+
+function validatorCalculator(){
+    const select = document.getElementById("cryptos");
+    const value_from = select.options[select.selectedIndex].value;
+    const select2 = document.getElementById("cryptos2");
+    const value_to = select2.options[select2.selectedIndex].value;
+    const result = true;
+
+    
+    if (value_from === value_to){
+        alert("Seleccione dos monedas diferentes");
+        result = false;
+    }
+    
+    return result;
+    
+}
+
+function validatorPV(){
+    const pv = document.getElementById("pvcrypto").value;
+    const q = document.getElementById("total_crypto").value;
+    const result = true;
+
+    if(pv === "" || pv === undefined){
+        alert("Precio venta invalido")
+        result = false
+    }
+
+    if(q === "" || q === undefined){
+        alert("Total incorrecto")
+        result = false
+    }
+    return result
+
+}
+
+function OptionsHideSelected(){
+    const select = document.getElementById("cryptos");
+    const select2 = document.getElementById("cryptos2");
+    const value = select.options[select.selectedIndex].value;
+    const value2 = select2.options[select.selectedIndex].value;
+
+    if (value === value2){
+        value2.options.disable = true;
+    }
+}
+
+function ShowBuy(){
+    document.getElementById("btn_buy").style.display = "block";    
+}
+
+function HideBuy(){
+    document.getElementById("btn_buy").style.display = "none"
 }
 
 
 window.onload = function () {
     all_movements_handler()
     status_handler()
+
     
    document.getElementById("calculator").addEventListener("click", CalculatorExchange)
-
    document.getElementById("myform").addEventListener("submit", alta_handler)
-   
-//    document.getElementById("close-btn").addEventListener("onclick", hide_error)
-
-
+  
 }
-// window.onerror = function(){
-//     show_connection_error()
-// }
-
-// function show_connection_error(message){
-//     document.getElementById("errormsg").innerHTML = message
-//     document.getElementById("alert").classList.remove("hide");
-//     document.getElementById("alert").classList.add("show");
-//     document.getElementById("alert").classList.add("showAlert");
-// }
-// function hide_error(){
-//     document.getElementById("close-btn").classList.add("hide");
-//     document.getElementById("close-btn").classList.remove("show");
-// }
-
-
-

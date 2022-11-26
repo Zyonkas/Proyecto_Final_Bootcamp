@@ -6,5 +6,4 @@ CREATE TABLE  "movements" (
 	"cantidad_from"	REAL NOT NULL,
 	"moneda_to"	TEXT NOT NULL,
 	"cantidad_to"	REAL NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT),
-);
+	PRIMARY KEY("id" AUTOINCREMENT));

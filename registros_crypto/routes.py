@@ -123,7 +123,7 @@ def select(coin_from, coin_to, q_from):
             rate, date, time = c.get_exchange_rate(coin_from, coin_to)
 
             return {
-                "data": {
+                    "data": {
                     "q": rate * quantity_change,
                     "pv": rate,
                     "time": time,

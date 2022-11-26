@@ -19,6 +19,7 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
+    
 
     <div id="movements_list" class="container_movements">
             
@@ -35,7 +36,7 @@
            
     </div>
 
-    <div id="status_balance">
+    <div id="status_balance" class="status_container">
             <table id="status">
                 <tr>
                     <th>Invertido:</th>
@@ -70,7 +71,7 @@
 
         
         
-    <aside class="show_onclick">
+    <div class="form-container">
             <form id="myform">
                
                 <div class="container">
@@ -78,35 +79,28 @@
                     From:
                     
                     <select name="monedas_from" id="cryptos" required>
-                        <optgroup name="monedas_from" id="Fiat" >      
-                            <option value="EUR">EUR</option>                  
-                        </optgroup> 
-                        <optgroup name="monedas_from">
-                            <option value="BTC">BTC</option>                  
-                            <option value="ETH">ETH</option>                  
-                            <option value="BNB">BNB</option>                  
-                            <option value="XRP">XRP</option>                  
-                            <option value="USDT">USDT</option>                  
-                            <option value="ADA">ADA</option>                  
-                            <option value="SOL">SOL</option>                  
-                            <option value="DOT">DOT</option>                  
-                            <option value="MATIC">MATIC</option>
-                        </optgroup>
+                        <option value="">Seleccione una moneda</option>                            
+                        <option value="EUR">EUR</option>                                         
+                        <option value="BTC">BTC</option>                  
+                        <option value="ETH">ETH</option>                  
+                        <option value="BNB">BNB</option>                  
+                        <option value="XRP">XRP</option>                  
+                        <option value="USDT">USDT</option>                  
+                        <option value="ADA">ADA</option>                  
+                        <option value="SOL">SOL</option>                  
+                        <option value="DOT">DOT</option>                  
+                        <option value="MATIC">MATIC</option>                    
                     </select>
                     
                     Q:
-                    <input id="cantidad_from" type="number" name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
+                    <input id="cantidad_from" type="number"  step="0.00000001"   name="cantidad_from"   placeholder="Introduzca la cantidad a cambiar" required>  
                     
                     <a title="calculator" id="calculator">
                         <img src="/static/img/presupuesto.png" alt="calculator" id="calculator" />
 
-                    </a>    
-                    
-                    
-                        
-                     
+                    </a>     
 
-                </div>
+                </div
 
                 <div id="crypto_to" class="container">
                     <label for="monedas"></label>
@@ -114,22 +108,18 @@
                     
                     
                     <select name="monedas_to" id="cryptos2" required>
-                        <optgroup name="Fiat" >      
-                            <option value="EUR">EUR</option>                  
-                        </optgroup> 
-                        <optgroup name="cryptos">
-                            <option value="BTC">BTC</option>                  
-                            <option value="ETH">ETH</option>                  
-                            <option value="BNB">BNB</option>                  
-                            <option value="XRP">XRP</option>                  
-                            <option value="USDT">USDT</option>                  
-                            <option value="ADA">ADA</option>                  
-                            <option value="SOL">SOL</option>                  
-                            <option value="DOT">DOT</option>                  
-                            <option value="MATIC">MATIC</option>
-                        </optgroup>
+                        <option value="">Seleccione una moneda</option>     
+                        <option value="EUR">EUR</option>                  
+                        <option value="BTC">BTC</option>                  
+                        <option value="ETH">ETH</option>                  
+                        <option value="BNB">BNB</option>                  
+                        <option value="XRP">XRP</option>                  
+                        <option value="USDT">USDT</option>                  
+                        <option value="ADA">ADA</option>                  
+                        <option value="SOL">SOL</option>                  
+                        <option value="DOT">DOT</option>                  
+                        <option value="MATIC">MATIC</option>
                     </select>
-                    <span id="message_error" class="hidden"></span>
 
                     <table>
                         <tr>
@@ -143,18 +133,12 @@
                         </tr>
                         
                     </table>
-                    <div class="btn_buy">
+                    <div class="btn_buy" id="btn_buy">
                         <button type="submit" id="btn_buy">BUY</button>  
-                    </div>
-                    
-                    
-                      
-                    
-                    
+                    </div>                                             
                 </div>
-                
             </form>
-    </aside>    
+    </div>   
     
 
 
