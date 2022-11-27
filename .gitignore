@@ -1,9 +1,7 @@
 venv/
 .env
 **__pycache__/
-node_modules/
 config.py
 data/*.db
 data/*.sqlite
 .vscode/
-
