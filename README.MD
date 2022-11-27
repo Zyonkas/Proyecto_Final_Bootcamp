@@ -12,9 +12,9 @@
 ### 3- Creacion de la BD para guardar los movimientos. Usando el fichero _"/data/create.sql"._
    - **IMPORTANTE CREAR LA BD EN EL DIRECTORIO DE /DATA**
    - Desde el terminal usa los siguientes comandos:
-    `sqlite3 Nombre_BD.db`
-    `.read data/create.sql`
-    `.q`
+    >`sqlite3 Nombre_BD.db`
+    >`.read data/create.sql`
+    >`.q`
      - Tambien es posible crearlo usando un gestor de BD , que en nuestro caso es el DB Browser SQLite
     Para ello ejecutas la query de SQL que hay dentro del fichero data/create.sql.
 
@@ -31,6 +31,6 @@
 
 ### 7- Acceso a la aplicacion web
    - Primero tienes que activar el entorno virtual si aun no lo hiciste, y luego escribe:
-    `flask run`
+    >`flask run`
    - Luego de que tengas la aplicacion activa, entra en el navegador y escribe:
-    `htttp://"La IP de tu servidor flask ": " El puerto de acceso"`.
+    >`htttp://"La IP de tu servidor flask ": " El puerto de acceso"`.
