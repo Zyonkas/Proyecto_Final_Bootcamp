@@ -15,7 +15,7 @@
     `sqlite3 Nombre_BD.db`
     `.read data/create.sql`
     `.q`
-     - Tambien es posible crearlo usando un gestor de BD , que en nuestro caso es el [DB Browser SQLite](https://sqlitebrowser.org)
+      - Tambien es posible crearlo usando un gestor de BD , que en nuestro caso es el [DB Browser SQLite](https://sqlitebrowser.org)
     Para ello ejecutas la query de SQL que hay dentro del fichero data/create.sql.
 
 ### 4-Obtener una apikey de coinapi.io

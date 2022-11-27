@@ -1,4 +1,62 @@
+* {
+    box-sizing: border-box;
+}
 
+body > header, footer{
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+    font-size: 1.4em;
+    font-weight: bold;
+
+    background: red, #334;
+    padding: 0;
+    font-family: 'Courgette', cursive;
+}
+body{
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    margin: 0;
+}
+
+/* Button para abrir alta */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: sticky;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* Alta oculto por defecto */
+.popup-form {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid black;
+    z-index: 9;
+}
+/* form styles */
+.form-container {
+    max-width: 500px;
+    padding: 10px;
+    background-color: red, #334;
+}
+/* Backgroud button cerrar */
+.form-container .cancel {
+    background-color: red;
+}
+  
+/* Hover effects */
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
 /* Ocultar boton buy */
 .btn_buy{
     display: none;

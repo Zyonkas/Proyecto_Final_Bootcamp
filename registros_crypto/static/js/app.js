@@ -18,11 +18,16 @@ function all_movements() {
             const data = JSON.parse(this.responseText)
             const table = document.querySelector("#movements_table")
             const movements = data.data
-            const message = document.querySelector("#message_error")
+            const message = document.querySelector("#message")
             if (movements.length == 0){
                 message.style.display = "block";
                 table.style.display = "none";
             }
+            else{
+                refresh()
+                message.style.display = "none";
+                table.style.display = "block"
+            
         
             
                 for (let i=0; i < movements.length; i++){
@@ -57,6 +62,7 @@ function all_movements() {
                 }    
                 
             }
+        }
             
     
 }
@@ -157,7 +163,6 @@ function alta_handler(ev){
 }
 
 function status_handler() {
-
     status_request = new XMLHttpRequest()
 
     status_request.onreadystatechange = function(){
@@ -170,8 +175,15 @@ function status_handler() {
         document.getElementById("current_value").innerHTML = data.valor_actual;
         document.getElementById("profit").innerHTML = data.beneficios;
         }
-        if (status_request.status >= 400){
-            alert("ERROR en la peticion")
+        if (status_request.status !== 200 && status_request.readyState === 4){
+            const msg = JSON.parse(status_request.response).mensaje;
+            document.getElementById("invested").innerHTML = "Error";
+            document.getElementById("recovered").innerHTML = "Error";
+            document.getElementById("buy_value").innerHTML = "Error";
+            document.getElementById("current_value").innerHTML = "Error";
+            document.getElementById("profit").innerHTML = "Error";
+            alert("Error! " + msg )
+            
         }
     }
     status_request.open("GET", "/api/v1/status", true)
@@ -294,13 +306,21 @@ function HideBuy(){
     document.getElementById("btn_buy").style.display = "none"
 }
 
+function openForm() {
+    document.getElementById("Form").style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById("Form").style.display = "none";
+}
 
 window.onload = function () {
     all_movements_handler()
     status_handler()
 
     
-   document.getElementById("calculator").addEventListener("click", CalculatorExchange)
-   document.getElementById("myform").addEventListener("submit", alta_handler)
-  
+    document.getElementById("calculator").addEventListener("click", CalculatorExchange)
+    document.getElementById("myform").addEventListener("submit", alta_handler)
+    document.getElementById("openbtn").addEventListener("click", openForm)
+    document.getElementById("closebtn").addEventListener("click", closeForm)
 }

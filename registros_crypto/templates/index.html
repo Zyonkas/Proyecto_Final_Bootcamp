@@ -19,24 +19,8 @@
     <header id="header_crypto" >
         <h1>myCRYPTO</h1>               
     </header>
-    
-
-    <div id="movements_list" class="container_movements">
-            
-            <table id="movements_table">
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>From</th>
-                    <th>Cantidad</th>
-                    <th>To</th>
-                    <th>Cantidad</th>
-                </tr>
-            </table>
-           
-    </div>
-
-    <div id="status_balance" class="status_container">
+<div class="flex">    
+    <div id="status_balance" class="container status">
             <table id="status">
                 <tr>
                     <th>Invertido:</th>
@@ -69,10 +53,27 @@
             
     </div>
 
+    <div id="movements_list" class="container movements">
+            
+            <table id="movements_table">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>From</th>
+                    <th>Cantidad</th>
+                    <th>To</th>
+                    <th>Cantidad</th>
+                </tr>
+            </table>
+            <span id="message">No se han encontrado movimientos</span>
+           
+    </div>
+</div>
+
         
-        
-    <div class="form-container">
-            <form id="myform">
+    <button class="open-button" id="openbtn">Pulse para comprar</button>  
+    <div class="popup-form" id="Form">
+            <form id="myform" class="form-container">
                
                 <div class="container">
                     <label for="monedas"></label>
@@ -100,7 +101,7 @@
 
                     </a>     
 
-                </div
+                </div>
 
                 <div id="crypto_to" class="container">
                     <label for="monedas"></label>
@@ -137,13 +138,14 @@
                         <button type="submit" id="btn_buy">BUY</button>  
                     </div>                                             
                 </div>
+                <button type="button" class="close-button" id="closebtn">Cerrar</button> 
             </form>
     </div>   
     
 
 
     <footer>
-        <div  class="container">
+        <div  class="footer">
             &copy; 2022 - JK
         </div>
     </footer>
