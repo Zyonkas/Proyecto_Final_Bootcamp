@@ -110,6 +110,7 @@ function alta_handler(ev){
     const value_to = select2.options[select2.selectedIndex].value;
     const pv = document.getElementById("pvcrypto").value;
 
+    // Validador para que al hacer las compras y se de alta compruebe que  los datos de pv y total esten vacios, en caso contrario salte un error 
     if(validatorPV()){
 
    
@@ -207,6 +208,7 @@ function CalculatorExchange(ev){
     const select2 = document.getElementById("cryptos2");
     const value_to = select2.options[select2.selectedIndex].value;
 
+    // Validador de monedas iguales para que no llame al servidor al intentar hacer el calculo si es el caso, en caso contrario salte un error controlado
     if (validatorCalculator()){
 
     
@@ -247,6 +249,7 @@ function CalculatorExchange(ev){
     }
 }
 
+// Validador para que monedas iguales
 function validatorCalculator(){
     const select = document.getElementById("cryptos");
     const value_from = select.options[select.selectedIndex].value;
@@ -264,6 +267,7 @@ function validatorCalculator(){
     
 }
 
+// Validador para que el pv y el total 
 function validatorPV(){
     const pv = document.getElementById("pvcrypto").value;
     const q = document.getElementById("total_crypto").value;
@@ -280,17 +284,6 @@ function validatorPV(){
     }
     return result
 
-}
-
-function OptionsHideSelected(){
-    const select = document.getElementById("cryptos");
-    const select2 = document.getElementById("cryptos2");
-    const value = select.options[select.selectedIndex].value;
-    const value2 = select2.options[select.selectedIndex].value;
-
-    if (value === value2){
-        value2.options.disable = true;
-    }
 }
 
 function ShowBuy(){
